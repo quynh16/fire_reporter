@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/drawable/ic_home.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/drawable/toolbar.xml" value="0.3828125" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_camera.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_main.xml" value="0.22418478260869565" />
@@ -14,6 +16,8 @@
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/report_history_card.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/toolbar.xml" value="0.5" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/menu/bottom_navigation.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
       </map>
     </option>
   </component>

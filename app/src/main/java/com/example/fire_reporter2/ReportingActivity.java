@@ -24,6 +24,7 @@ public class ReportingActivity extends AppCompatActivity {
 
     ImageView imageView;
     Button openCamera;
+    Button submitReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class ReportingActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_view);
         openCamera = findViewById(R.id.open_camera);
         openCamera.setText("OPEN CAMERA");
+        submitReport = findViewById(R.id.submit_report);
+        submitReport.setVisibility(View.INVISIBLE);
 
         BottomNavigationView navbar = findViewById(R.id.bottom_navbar);
         navbar.setSelectedItemId(R.id.home);
@@ -73,7 +76,9 @@ public class ReportingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // open camera
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
+                // TODO: make it automatically open the rear camera
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 startActivityIfNeeded(intent, 100);
             }
         });
@@ -86,6 +91,8 @@ public class ReportingActivity extends AppCompatActivity {
             // get captured image
             Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
 
+            submitReport.setVisibility(View.VISIBLE);
+            openCamera.setVisibility(View.INVISIBLE);
             imageView.setImageBitmap(capturedImage);
             openCamera.setText("RETAKE IMAGE");
         }
