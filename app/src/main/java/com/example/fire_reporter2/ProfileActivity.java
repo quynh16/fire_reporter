@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id){
                     case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.reporting:

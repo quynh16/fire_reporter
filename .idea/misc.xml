@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/drawable/toolbar.xml" value="0.3828125" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_camera.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_main.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_map.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_profile.xml" value="0.18" />
-        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_reporting.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_reporting.xml" value="0.2328042328042328" />
+        <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/activity_submit.xml" value="0.33" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/report_history.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/report_history_card.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Quynh/AndroidStudioProjects/fire_reporter2/app/src/main/res/layout/toolbar.xml" value="0.5" />
