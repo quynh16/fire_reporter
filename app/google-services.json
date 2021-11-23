@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156367712017",
+    "firebase_url": "https://fire-detector-fd42c-default-rtdb.firebaseio.com",
+    "project_id": "fire-detector-fd42c",
+    "storage_bucket": "fire-detector-fd42c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156367712017:android:3132cc41e5cd89f53ba6b0",
+        "android_client_info": {
+          "package_name": "com.example.fire_reporter2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156367712017-ie5drsge0sugeu51tjcm95ij79qifl8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZPdW8hBB5e12SbzTcmhP_x0zrJd8UzJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156367712017-ie5drsge0sugeu51tjcm95ij79qifl8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

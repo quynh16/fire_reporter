@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingVertical="5dp" >
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/white_background"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/fire1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fire_1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/black"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fire1"
+            android:text="9:56 AM"
+            android:textAlignment="center"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/black"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fire1"
+            android:text="Ocotober 21, 2021"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/red"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fire1"
+            android:text="Reported"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 </RelativeLayout>
