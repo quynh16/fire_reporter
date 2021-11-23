@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +31,9 @@ public class ReportingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporting);
+
+        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn.setVisibility(View.GONE);
 
         imageView = findViewById(R.id.image_view);
         openCamera = findViewById(R.id.open_camera);

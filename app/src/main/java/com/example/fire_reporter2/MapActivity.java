@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -16,6 +18,9 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn.setVisibility(View.GONE);
 
         BottomNavigationView navbar = findViewById(R.id.bottom_navbar);
         navbar.setSelectedItemId(R.id.map);

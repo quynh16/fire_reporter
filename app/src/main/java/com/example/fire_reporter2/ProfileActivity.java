@@ -41,6 +41,21 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        ImageButton editBtn = findViewById(R.id.edit_profile_btn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("id",1);
+                intent.putExtra("name", "Elizabeth Olsen");
+                intent.putExtra("email", "email@gmail.com");
+                startActivity(intent);
+            }
+        });
+
+        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn.setVisibility(View.GONE);
+
         navbar = findViewById(R.id.bottom_navbar);
         report_history = findViewById(R.id.report_history);
 

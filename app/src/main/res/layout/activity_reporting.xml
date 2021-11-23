@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ReportingActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar" />
+    <include layout="@layout/toolbar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navbar"

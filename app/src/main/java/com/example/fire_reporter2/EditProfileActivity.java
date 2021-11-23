@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,6 +19,11 @@ public class EditProfileActivity extends AppCompatActivity {
     LinearLayout report_history;
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    TextInputEditText editName, editEmail, editPassword;
+
+    private String user_name, user_email;
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +35,15 @@ public class EditProfileActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("users");
 
-        UserHelperClass helper = new UserHelperClass();
-        // get all values from text fields
+        editName = findViewById(R.id.edit_name);
+        editEmail = findViewById(R.id.edit_email);
+        editPassword = findViewById(R.id.edit_password);
+
+        user_name = getIntent().getStringExtra("name");
+        user_email = getIntent().getStringExtra("email");
+
+        editName.setText(user_name);
+        editEmail.setText(user_email);
 
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
