@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="a_desc">Most house fires start in the kitchen. Cooking is the leading cause of home fire injuries. Cooking fires often start from overheated grease and unattended cooking. Electric stoves are involved in more fires than gas stoves.</string>
+    <string name="b_desc">Approximately two-thirds of all fire deaths happen in homes where there is no working fire alarm. Your chance of dying in a home fire is cut in half if you have a working smoke alarm.</string>
+    <string name="c_desc">In 2018, public fire departments responded to an estimated 1,318,500 fires in the United States, of which 499,000 occurred in structures, 181,500 occurred in vehicles, and 607,000 occurred in outside properties.</string>
+    <string name="d_desc">Earth is the only known planet where fire can burn.</string>
+    <string name="e_desc">Fire fighting was actually a sport at the 1900 Olympics in Paris.</string>
+</resources>
