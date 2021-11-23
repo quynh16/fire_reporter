@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navbar"
@@ -18,28 +24,94 @@
         app:menu="@menu/navbar_menu" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:id="@+id/scrollView"
+        android:layout_width="384dp"
+        android:layout_height="618dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:layout_editor_absoluteX="31dp">
+        android:background="@color/light_gray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/light_gray"
-            android:layout_height="700dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/include">
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <TextView
+                android:id="@+id/statusHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="900dp"
-                android:scrollY="70dp"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="Your Most Recent Report"
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toTopOf="@+id/statusFire"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/statusFire"
+                layout="@layout/activity_fire_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/homee" />
+                app:layout_constraintTop_toBottomOf="@+id/statusHeader" />
+
+            <TextView
+                android:id="@+id/articleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="News Feed"
+                android:textColor="@color/black"
+                android:background="@color/light_gray"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/statusFire" />
+
+            <include
+                android:id="@+id/newsFeed"
+                layout="@layout/activity_article_viewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />
+
+            <!--            <androidx.viewpager2.widget.ViewPager2-->
+            <!--                android:id="@+id/newsFeed"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+
+            <!--                android:background="@color/light_gray"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />-->
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/factsView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsFeed" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </ScrollView>
 
 
