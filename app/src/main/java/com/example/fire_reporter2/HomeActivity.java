@@ -57,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         ImageButton btn = (ImageButton)findViewById(R.id.profile_btn);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

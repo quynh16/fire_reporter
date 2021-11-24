@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +32,9 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn.setVisibility(View.GONE);
+
         navbar = findViewById(R.id.bottom_navbar);
 
         database = FirebaseDatabase.getInstance();
@@ -44,6 +49,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editName.setText(user_name);
         editEmail.setText(user_email);
+
+        ImageButton btn = (ImageButton)findViewById(R.id.back_to_profile_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+            }
+        });
 
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

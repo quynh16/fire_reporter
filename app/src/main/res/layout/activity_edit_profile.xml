@@ -22,10 +22,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edit_profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737" />
+        app:layout_constraintVertical_bias="0.67" />
 
     <ImageView
         android:id="@+id/edit_profile_picture"
@@ -51,8 +51,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621">
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture"
+        app:layout_constraintVertical_bias="0.093">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -143,5 +143,15 @@
         app:layout_constraintTop_toTopOf="@+id/edit_profile_picture"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_edit_pencil" />
+
+    <ImageButton
+        android:id="@+id/back_to_profile_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_title"
+        app:layout_constraintEnd_toStartOf="@+id/profile_title"
+        app:layout_constraintTop_toTopOf="@+id/profile_title"
+        android:backgroundTint="@color/white"
+        app:srcCompat="@drawable/ic_back_arrow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
