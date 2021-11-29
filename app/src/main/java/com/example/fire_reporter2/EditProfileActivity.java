@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -43,13 +44,21 @@ public class EditProfileActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.edit_email);
         editPassword = findViewById(R.id.edit_password);
 
-        Intent intent = getIntent();
-        user_name = intent.getStringExtra("name");
-        user_email = intent.getStringExtra("email");
-        user_id = intent.getStringExtra("id");
+        showAllUserData();
 
-        editName.setText(user_name);
-        editEmail.setText(user_email);
+        ImageButton save_btn = (ImageButton)findViewById(R.id.save_profile_btn);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                if (update(v)) {
+                    intent.putExtra("name", user_name);
+                    intent.putExtra("email", user_email);
+                    intent.putExtra("id", user_id);
+                }
+                startActivity(intent);
+            }
+        });
 
         ImageButton backBtn = (ImageButton)findViewById(R.id.back_to_profile_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,5 +102,49 @@ public class EditProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void showAllUserData() {
+        Intent intent = getIntent();
+        user_name = intent.getStringExtra("name");
+        user_email = intent.getStringExtra("email");
+        user_id = intent.getStringExtra("id");
+
+        editName.setText(user_name);
+        editEmail.setText(user_email);
+    }
+
+    public boolean update(View view) {
+        if (nameChanged() || emailChanged()) {
+            Toast.makeText(this, "Profile has been updated", Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+            Toast.makeText(this, "Nothing has been updated", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
+    private boolean emailChanged() {
+        if (!user_email.equals(editEmail.getText().toString())) {
+            reference.child(user_id).child("email").setValue(editEmail.getText().toString());
+            user_email = editEmail.getText().toString();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean passwordChanged() {
+        return true;
+    }
+
+    private boolean nameChanged() {
+        if (!user_name.equals(editName.getText().toString())) {
+            reference.child(user_id).child("name").setValue(editName.getText().toString());
+            user_name = editEmail.getText().toString();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
