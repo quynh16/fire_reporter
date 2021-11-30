@@ -1,6 +1,5 @@
 package com.example.fire_reporter2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

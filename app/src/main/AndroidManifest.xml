@@ -12,6 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fire_reporter2">
         <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            android:theme="@android:style/Theme.NoTitleBar"
+        </activity>
+        <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
         <activity
@@ -27,16 +37,11 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            android:theme="@android:style/Theme.NoTitleBar"
-        </activity>
-
+            android:name=".RegistrationActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".LogonActivity"
+            android:exported="true"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
