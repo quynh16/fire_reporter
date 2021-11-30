@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/et_password"
+    android:id="@+id/et_password_xml"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.228" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/et_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/et_password"
         app:layout_constraintVertical_bias="0.066" />
 
     <TextView

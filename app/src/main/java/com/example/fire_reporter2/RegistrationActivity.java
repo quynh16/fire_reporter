@@ -50,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
     //Validate email and password inputs
     private boolean validate(String email, String password, String full_name){
         if(email.isEmpty() || password.length() < 8 || full_name.isEmpty()){
-            Toast.makeText(this, "Please enter all the details | Password should be at least 8 characters.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter all user details. Password should be at least 8 characters.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

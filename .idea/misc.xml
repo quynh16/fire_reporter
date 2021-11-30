@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Charlie/StudioProjects/fire_reporter2/app/src/main/res/layout/activity_home.xml" value="0.2015625" />
+        <entry key="..\:/Users/Charlie/StudioProjects/fire_reporter2/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Charlie/StudioProjects/fire_reporter2/app/src/main/res/layout/activity_main.xml" value="0.2015625" />
+        <entry key="..\:/Users/Charlie/StudioProjects/fire_reporter2/app/src/main/res/layout/activity_registration.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Ny/StudioProjects/fire_reporter/app/src/main/res/drawable/ic_back_arrow.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Ny/StudioProjects/fire_reporter/app/src/main/res/drawable/ic_edit_pencil.xml" value="0.290625" />
         <entry key="..\:/Users/Ny/StudioProjects/fire_reporter/app/src/main/res/drawable/ic_name_small.xml" value="0.290625" />
