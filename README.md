@@ -16,6 +16,7 @@ Profile will then store user information and keep a record of his/her recent fir
 ## Technologies
 * Android Studio Arctic Fox | 2020.3.1 Patch 3
 * Firebase for Android | Version 29.0.0
+* Android Emulator | Android Version 10.0
 
 ## Setup
 To run this project, install it locally using ______
