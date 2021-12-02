@@ -2,6 +2,8 @@ package com.example.fire_reporter2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -9,20 +11,89 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.net.URL;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class HomeActivity extends AppCompatActivity {
+    private static final String API_KEY = "56cc0cd367c4405686200dfd43598387";
     ViewPager2 viewPager2;
     ArrayList<ViewPagerItem> viewPagerItemArrayList;
+    private ViewPager2 newsRV;
+    private ProgressBar loadingPB;
+    private ArrayList<Articles> articlesArrayList;
+    private NewsRVAdapter newsRVAdapter;
+
+
+
+    private void getNews(String category){
+        loadingPB.setVisibility(View.VISIBLE);
+        articlesArrayList.clear();
+        String URL = "https://newsapi.org/v2/everything?q="+category+"&from=2021-11-28&sortBy=popularity&apiKey="+API_KEY;
+        String baseURL = "https://newsapi.org/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetroFitAPI retroFitAPI = retrofit.create(RetroFitAPI.class);
+        Call<NewsModal> call;
+        call = retroFitAPI.getAllNews(URL);
+        call.enqueue(new Callback<NewsModal>() {
+            @Override
+            public void onResponse(Call<NewsModal> call, Response<NewsModal> response) {
+                NewsModal newsModal = response.body();
+                loadingPB.setVisibility(View.GONE);
+                ArrayList<Articles> articles = newsModal.getArticles();
+                for(int i=0;i<articles.size();i++){
+                    articlesArrayList.add(new Articles(articles.get(i).getTitle(),articles.get(i).getDescription(),articles.get(i).getUrlToImage(),
+                            articles.get(i).getUrl(),articles.get(i).getContent()));
+                }
+                newsRVAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailure(Call<NewsModal> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, "Failed to get news", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        newsRV = findViewById(R.id.newsFeed);
+        loadingPB = findViewById(R.id.loading);
+        articlesArrayList= new ArrayList<>();
+        newsRVAdapter = new NewsRVAdapter(articlesArrayList,this);
+
+
+        newsRV.setAdapter(newsRVAdapter);
+        String category = "Fire-Department";
+        getNews(category);
+        newsRVAdapter.notifyDataSetChanged();
+
+
+
+
+
 
         viewPager2 = findViewById(R.id.factsView);
         String heading = "Fire Fact";
@@ -38,9 +109,6 @@ public class HomeActivity extends AppCompatActivity {
 
             ViewPagerItem viewPagerItem = new ViewPagerItem(heading,desc[i]);
             viewPagerItemArrayList.add(viewPagerItem);
-            if(i==5){
-                i=0;
-            }
 
         }
 

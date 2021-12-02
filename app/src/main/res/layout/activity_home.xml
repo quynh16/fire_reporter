@@ -66,25 +66,27 @@
                 app:layout_constraintHorizontal_bias="0.027"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/statusFire" />
-
-            <include
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/newsFeed"
-                layout="@layout/activity_article_viewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/articleHeader" />
 
-            <!--            <androidx.viewpager2.widget.ViewPager2-->
-            <!--                android:id="@+id/newsFeed"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-
-            <!--                android:background="@color/light_gray"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />-->
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="157dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginEnd="108dp"
+                app:layout_constraintBottom_toTopOf="@+id/factsView"
+                app:layout_constraintEnd_toEndOf="@+id/newsFeed"
+                app:layout_constraintHorizontal_bias="0.77"
+                android:padding="6dp"
+                app:layout_constraintStart_toStartOf="@+id/newsFeed"
+                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/factsView"
