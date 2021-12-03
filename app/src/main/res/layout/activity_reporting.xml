@@ -8,15 +8,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navbar_menu" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,15 +35,16 @@
             app:cornerRadius="10dp" />
 
         <Button
-
             android:id="@+id/submit_report"
             android:layout_width="match_parent"
             android:layout_height="71dp"
-
             android:layout_marginBottom="20dp"
             android:text="Submit Report"
             android:textSize="16sp"
             app:cornerRadius="10dp" />
+
     </LinearLayout>
+
+    <include layout="@layout/bottom_navbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
