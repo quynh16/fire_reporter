@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
+    private static final String TAG = "ProfileActivity";
     BottomNavigationView navbar;
     LinearLayout report_history;
     FirebaseDatabase database;
@@ -29,10 +32,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ImageView profilePicture;
     private TextView name, email, password;
-    private ImageButton editButton;
+    private ImageButton editBtn, profileBtn;
 
-    private String user_name, user_email;
-    private int user_id;
+    private String user_name, user_email, user_id;
 
     private static final String USERS = "users";
 
@@ -41,19 +43,13 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ImageButton editBtn = findViewById(R.id.edit_profile_btn);
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                intent.putExtra("id",1);
-                intent.putExtra("name", "Elizabeth Olsen");
-                intent.putExtra("email", "email@gmail.com");
-                startActivity(intent);
-            }
-        });
+        // user information
+        name = findViewById(R.id.user_name);
+        email = findViewById(R.id.user_email);
+        profilePicture = findViewById(R.id.profile_picture);
+        editBtn = (ImageButton)findViewById(R.id.edit_profile_btn);
 
-        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn = findViewById(R.id.profile_btn);
         profileBtn.setVisibility(View.GONE);
 
         navbar = findViewById(R.id.bottom_navbar);
@@ -62,65 +58,70 @@ public class ProfileActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(USERS);
 
-        // user information
-        name = findViewById(R.id.user_name);
-        email = findViewById(R.id.user_email);
-        profilePicture = findViewById(R.id.profile_picture);
-        editButton = (ImageButton)findViewById(R.id.edit_profile_btn);
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                String abc = "hello";
-                intent.putExtra("name", abc);
-                startActivity(intent);
-            }
+        editBtn.setOnClickListener((View v) -> {
+            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            intent.putExtra("id", user_id);
+            startActivity(intent);
         });
 
-//        showAllUserData();
-
-        // get all values from text fields
+        showAllUserData();
 
         navbar.setSelectedItemId(R.id.home);
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id){
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.reporting:
-                        startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.map:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
+        navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
+            int id = item.getItemId();
+            switch (id){
+                case R.id.home:
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.reporting:
+                    startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.map:
+                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
             }
+            return false;
         });
         for (int i = 0; i < 5; i++) {
-            createReportCard();
+            createReportCard((ViewGroup) findViewById(android.R.id.content));
         }
     }
 
-    private void showAllUserData() {
+    private void getUserDataFromDB() {
         Intent intent = getIntent();
-        String user_id = intent.getStringExtra("id");
-        String user_name = intent.getStringExtra("name");
-        String user_email = intent.getStringExtra("email");
+        user_id = intent.getStringExtra("id");
+        Log.d(TAG, "User ID: " + user_id);
 
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                user_name = dataSnapshot.child(user_id).child("name").getValue(String.class);
+                user_email = dataSnapshot.child(user_id).child("email").getValue(String.class);
+                name.setText(user_name);
+                email.setText(user_email);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void showAllUserData() {
+        getUserDataFromDB();
         name.setText(user_name);
         email.setText(user_email);
     }
 
-    public void createReportCard() {
-        View view = getLayoutInflater().inflate(R.layout.report_history_card, null);
+    public void createReportCard(View v) {
+        View view = getLayoutInflater().inflate(R.layout.report_history_card, (ViewGroup) v, false);
         report_history.addView(view);
     }
 }

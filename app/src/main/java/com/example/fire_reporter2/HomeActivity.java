@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String API_KEY = "56cc0cd367c4405686200dfd43598387";
@@ -51,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         call = retroFitAPI.getAllNews(URL);
         call.enqueue(new Callback<NewsModal>() {
             @Override
-            public void onResponse(Call<NewsModal> call, Response<NewsModal> response) {
+            public void onResponse(@NonNull Call<NewsModal> call, @NonNull Response<NewsModal> response) {
                 NewsModal newsModal = response.body();
                 loadingPB.setVisibility(View.GONE);
                 ArrayList<Articles> articles = newsModal.getArticles();
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<NewsModal> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewsModal> call, @NonNull Throwable t) {
                 Toast.makeText(HomeActivity.this, "Failed to get news", Toast.LENGTH_SHORT).show();
 
             }
@@ -84,16 +85,10 @@ public class HomeActivity extends AppCompatActivity {
         articlesArrayList= new ArrayList<>();
         newsRVAdapter = new NewsRVAdapter(articlesArrayList,this);
 
-
         newsRV.setAdapter(newsRVAdapter);
         String category = "Fire-Department";
         getNews(category);
         newsRVAdapter.notifyDataSetChanged();
-
-
-
-
-
 
         viewPager2 = findViewById(R.id.factsView);
         String heading = "Fire Fact";
@@ -106,55 +101,45 @@ public class HomeActivity extends AppCompatActivity {
         viewPagerItemArrayList = new ArrayList<>();
 
         for (int i =0; i< 5 ; i++){
-
             ViewPagerItem viewPagerItem = new ViewPagerItem(heading,desc[i]);
             viewPagerItemArrayList.add(viewPagerItem);
-
         }
 
         VPAdapter vpAdapter = new VPAdapter(viewPagerItemArrayList);
 
         viewPager2.setAdapter(vpAdapter);
-
         viewPager2.setClipToPadding(false);
-
         viewPager2.setClipChildren(false);
-
         viewPager2.setOffscreenPageLimit(2);
-
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         ImageButton btn = (ImageButton)findViewById(R.id.profile_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-            }
+        btn.setOnClickListener((View v) -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            intent.putExtra("id", "1");
+            startActivity(intent);
         });
 
         BottomNavigationView navbar = findViewById(R.id.bottom_navbar);
         navbar.setSelectedItemId(R.id.home);
 
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id){
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.reporting:
-                        startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.map:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
+        navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
+            int id = item.getItemId();
+            switch (id){
+                case R.id.home:
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.reporting:
+                    startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.map:
+                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
             }
+            return false;
         });
     }
 }
