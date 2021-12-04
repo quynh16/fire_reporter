@@ -33,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton editBtn, profileBtn;
 
     private String user_name, user_email, user_id;
-
     private static final String USERS = "users";
 
     @Override

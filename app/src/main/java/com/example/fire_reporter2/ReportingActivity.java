@@ -1,17 +1,11 @@
 package com.example.fire_reporter2;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,16 +20,19 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ReportingActivity extends AppCompatActivity {
     private static final String TAG = "ReportingActivity";
     ImageView imageView;
     Button submitReport;
+    Bitmap photo;
     BottomNavigationView navbar;
     ActivityResultLauncher<Intent> activityResultLauncher;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     String user_id;
     private static final int CAMERA_REQUEST = 1888;
@@ -56,6 +53,19 @@ public class ReportingActivity extends AppCompatActivity {
         submitReport.setVisibility(View.INVISIBLE);
 
         getUserID();
+
+        submitReport.setOnClickListener((View v) -> {
+            SendEmailService.getInstance(getApplicationContext()).emailExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    SendEmailService.getInstance(getApplicationContext()).SendEmail(photo);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                }
+            });
+        });
 
         navbar.setSelectedItemId(R.id.reporting);
         navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
@@ -110,7 +120,7 @@ public class ReportingActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Bitmap photo = (Bitmap) result.getData().getExtras().get("data");
+                    photo = (Bitmap) result.getData().getExtras().get("data");
                     imageView.setImageBitmap(photo);
                     submitReport.setVisibility(View.VISIBLE);
                 }

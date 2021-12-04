@@ -29,6 +29,7 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageButton backBtn, saveBtn;
 
     private String user_name, user_email, user_id, user_password;
+    private static final String USERS = "users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
         navbar = findViewById(R.id.bottom_navbar);
 
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("users");
+        reference = database.getReference(USERS);
 
         editName = findViewById(R.id.edit_name);
         editEmail = findViewById(R.id.edit_email);
