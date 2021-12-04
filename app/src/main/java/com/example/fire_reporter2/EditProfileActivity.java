@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,15 +20,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private static final String TAG = "EditProfileActivity";
+    private static final String TAG = "EditttProfileActivity";
     BottomNavigationView navbar;
-    LinearLayout report_history;
     FirebaseDatabase database;
     DatabaseReference reference;
 
-    TextInputEditText editName, editEmail, editPassword;
+    TextInputEditText editName, editEmail, oldPassword, newPassword, confirmPassword;
+    ImageButton backBtn, saveBtn;
 
-    private String user_name, user_email, user_id;
+    private String user_name, user_email, user_id, user_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +45,26 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editName = findViewById(R.id.edit_name);
         editEmail = findViewById(R.id.edit_email);
-        editPassword = findViewById(R.id.edit_password);
+        oldPassword = findViewById(R.id.old_password);
+        newPassword = findViewById(R.id.new_password);
+        confirmPassword = findViewById(R.id.confirm_password);
 
-        getUserDataFromDB();
+        showAllUserData();
 
-        editName.setText(user_name);
-        editEmail.setText(user_email);
-
-        ImageButton backBtn = (ImageButton)findViewById(R.id.back_to_profile_btn);
+        backBtn = (ImageButton)findViewById(R.id.back_to_profile_btn);
         backBtn.setOnClickListener((View v) -> {
             Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
             intent.putExtra("id", user_id);
             startActivity(intent);
         });
 
-        ImageButton saveBtn = (ImageButton)findViewById(R.id.save_profile_btn);
+        saveBtn = (ImageButton)findViewById(R.id.save_profile_btn);
         saveBtn.setOnClickListener((View v) -> {
-            update(v);
-            Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
-            intent.putExtra("id", user_id);
-            startActivity(intent);
+            if (update(v)) {
+                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                intent.putExtra("id", user_id);
+                startActivity(intent);
+            }
         });
 
         navbar.setSelectedItemId(R.id.home);
@@ -90,10 +88,9 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void getUserDataFromDB() {
+    private void showAllUserData() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
-        Log.d(TAG, "User ID: " + user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,6 +99,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 user_name = dataSnapshot.child(user_id).child("name").getValue(String.class);
                 user_email = dataSnapshot.child(user_id).child("email").getValue(String.class);
+                user_password = dataSnapshot.child(user_id).child("password").getValue(String.class);
                 editName.setText(user_name);
                 editEmail.setText(user_email);
             }
@@ -115,33 +113,68 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public boolean update(View view) {
-        if (nameChanged() || emailChanged()) {
+        if (passwordChanged() && !validatePasswordChange()) {
+            // user's attempt to change password failed
+            return false;
+        } else if (nameChanged() || emailChanged() || passwordChanged()) {
             Toast.makeText(this, "Profile has been updated", Toast.LENGTH_LONG).show();
             return true;
-        } else {
+        } else if (!nameChanged() && !emailChanged() && !passwordChanged()) {
             Toast.makeText(this, "Nothing has been updated", Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
+        return true;
+    }
+
+    private boolean isEmpty(TextInputEditText etText) {
+        return etText.getText().toString().trim().length() == 0;
     }
 
     private boolean emailChanged() {
         if (!user_email.equals(editEmail.getText().toString())) {
             reference.child(user_id).child("email").setValue(editEmail.getText().toString());
-            user_email = editEmail.getText().toString();
             return true;
         } else {
             return false;
         }
     }
 
+    private boolean validatePasswordChange() {
+        if (!isEmpty(oldPassword) && !isEmpty(newPassword) && !isEmpty(confirmPassword)) {
+            String old_password = oldPassword.getText().toString();
+            String new_password = newPassword.getText().toString();
+            String confirm_password = confirmPassword.getText().toString();
+
+            if (!user_password.equals(old_password)) {
+                Toast.makeText(this, "Incorrect password", Toast.LENGTH_LONG).show();
+            } else {
+                if (!new_password.equals(confirm_password)) {
+                    Toast.makeText(this, "New passwords do not match", Toast.LENGTH_LONG).show();
+                } else {
+                    reference.child(user_id).child("password").setValue(new_password);
+                    return true;
+                }
+            }
+        } else if (isEmpty(confirmPassword) && !isEmpty(oldPassword) && !isEmpty(newPassword)) {
+            Toast.makeText(this, "Please re-enter your new password", Toast.LENGTH_LONG).show();
+        } else if (isEmpty(oldPassword) && (!isEmpty(newPassword) || !isEmpty(confirmPassword))) {
+            Toast.makeText(this, "Please enter your old password", Toast.LENGTH_LONG).show();
+        } else if (isEmpty(newPassword) && !isEmpty(oldPassword)) {
+            Toast.makeText(this, "Please enter your new password", Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
     private boolean passwordChanged() {
+//      user did not try to change password
+        if (isEmpty(oldPassword) && isEmpty(newPassword) && isEmpty(confirmPassword)) {
+            return false;
+        }
         return true;
     }
 
     private boolean nameChanged() {
         if (!user_name.equals(editName.getText().toString())) {
             reference.child(user_id).child("name").setValue(editName.getText().toString());
-            user_name = editEmail.getText().toString();
             return true;
         } else {
             return false;

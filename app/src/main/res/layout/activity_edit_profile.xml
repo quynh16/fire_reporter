@@ -10,141 +10,195 @@
         android:id="@+id/include2"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/profile_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="EDIT PROFILE"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edit_profile_picture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.67" />
-
-    <ImageView
-        android:id="@+id/edit_profile_picture"
-        android:layout_width="142dp"
-        android:layout_height="142dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="Profile Picture"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227"
-        app:srcCompat="@drawable/icon_avatar_gray"
-        tools:ignore="ImageContrastCheck" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_navbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture"
-        app:layout_constraintVertical_bias="0.093">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:scrollbars="none"
+        android:background="@color/light_gray"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profile_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Full Name"
-            app:boxBackgroundColor="@color/white">
+            android:background="@color/white"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_name"
-                android:drawablePadding="10dp"
-                android:text="Quynh Nguyen" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/profile_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Email"
-            app:boxBackgroundColor="@color/white">
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="EDIT PROFILE"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/edit_profile_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.185"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.67" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="10dp"
-                android:text="qtd.nguyen16@gmail.com" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Password"
-            app:boxBackgroundColor="@color/white"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_password"
-                android:drawablePadding="10dp"
-                android:inputType="textPassword"
-                android:text="password" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/save_profile_btn"
-            android:layout_width="120dp"
-            android:layout_height="49dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_save"
-            android:contentDescription="Edit"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
+        <ImageView
+            android:id="@+id/edit_profile_picture"
+            android:layout_width="142dp"
+            android:layout_height="142dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="Profile Picture"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_email"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.227"
+            app:srcCompat="@drawable/icon_avatar_gray"
+            tools:ignore="ImageContrastCheck" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture"
+            app:layout_constraintVertical_bias="0.093">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_picture"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_picture"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/edit_profile_picture"
-        app:layout_constraintTop_toTopOf="@+id/edit_profile_picture"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_edit_pencil" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Full Name"
+                app:boxBackgroundColor="@color/white">
 
-    <ImageButton
-        android:id="@+id/back_to_profile_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_title"
-        app:layout_constraintEnd_toStartOf="@+id/profile_title"
-        app:layout_constraintTop_toTopOf="@+id/profile_title"
-        android:backgroundTint="@color/white"
-        app:srcCompat="@drawable/ic_back_arrow" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_name"
+                    android:drawablePadding="10dp"
+                    android:text="Quynh Nguyen" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <include layout="@layout/bottom_navbar"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Email"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:drawablePadding="10dp"
+                    android:text="qtd.nguyen16@gmail.com" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Old Password"
+                app:boxBackgroundColor="@color/white"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/old_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="New Password"
+                app:boxBackgroundColor="@color/white"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Re-enter Password"
+                app:boxBackgroundColor="@color/white"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/save_profile_btn"
+                android:layout_width="120dp"
+                android:layout_height="49dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_save"
+                android:contentDescription="Edit"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_email"
+                app:layout_constraintVertical_bias="0.0" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_picture"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profile_picture"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/edit_profile_picture"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_picture"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_edit_pencil" />
+
+            <ImageButton
+                android:id="@+id/back_to_profile_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_title"
+                app:layout_constraintEnd_toStartOf="@+id/profile_title"
+                app:layout_constraintTop_toTopOf="@+id/profile_title"
+                android:backgroundTint="@color/white"
+                app:srcCompat="@drawable/ic_back_arrow" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>c
+    </ScrollView>
+
+    <include layout="@layout/bottom_navbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

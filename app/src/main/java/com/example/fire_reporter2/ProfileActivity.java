@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     private ImageView profilePicture;
-    private TextView name, email, password;
+    private TextView name, email;
     private ImageButton editBtn, profileBtn;
 
     private String user_name, user_email, user_id;
@@ -47,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
         name = findViewById(R.id.user_name);
         email = findViewById(R.id.user_email);
         profilePicture = findViewById(R.id.profile_picture);
-        editBtn = (ImageButton)findViewById(R.id.edit_profile_btn);
+        editBtn =  findViewById(R.id.edit_profile_btn);
 
         profileBtn = findViewById(R.id.profile_btn);
         profileBtn.setVisibility(View.GONE);
@@ -65,6 +63,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         showAllUserData();
+        Log.w(TAG, "User name: " + user_name);
+        Log.w(TAG, "User email: " + user_email);
 
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
@@ -86,11 +86,11 @@ public class ProfileActivity extends AppCompatActivity {
             return false;
         });
         for (int i = 0; i < 5; i++) {
-            createReportCard((ViewGroup) findViewById(android.R.id.content));
+            createReportCard(findViewById(android.R.id.content));
         }
     }
 
-    private void getUserDataFromDB() {
+    private void showAllUserData() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
         Log.d(TAG, "User ID: " + user_id);
@@ -112,12 +112,6 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-    }
-
-    private void showAllUserData() {
-        getUserDataFromDB();
-        name.setText(user_name);
-        email.setText(user_email);
     }
 
     public void createReportCard(View v) {
