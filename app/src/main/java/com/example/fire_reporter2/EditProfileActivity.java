@@ -49,6 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
         newPassword = findViewById(R.id.new_password);
         confirmPassword = findViewById(R.id.confirm_password);
 
+        getUserID();
         showAllUserData();
 
         backBtn = (ImageButton)findViewById(R.id.back_to_profile_btn);
@@ -69,18 +70,25 @@ public class EditProfileActivity extends AppCompatActivity {
 
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
+            Intent intent;
             int id = item.getItemId();
             switch (id){
                 case R.id.home:
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.reporting:
-                    startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
+                    intent = new Intent(getApplicationContext(), ReportingActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.map:
-                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                    intent = new Intent(getApplicationContext(), MapActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
             }
@@ -88,10 +96,12 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void showAllUserData() {
+    private void getUserID() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
+    }
 
+    private void showAllUserData() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

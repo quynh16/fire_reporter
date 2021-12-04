@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MapActivity extends AppCompatActivity {
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,28 +26,30 @@ public class MapActivity extends AppCompatActivity {
         BottomNavigationView navbar = findViewById(R.id.bottom_navbar);
         navbar.setSelectedItemId(R.id.map);
 
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id){
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.reporting:
-                        startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.map:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-
-                return false;
-
+        navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
+            Intent intent;
+            int id = item.getItemId();
+            switch (id){
+                case R.id.home:
+                    intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.reporting:
+                    intent = new Intent(getApplicationContext(), ReportingActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.map:
+                    intent = new Intent(getApplicationContext(), MapActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
             }
+            return false;
         });
     }
 }

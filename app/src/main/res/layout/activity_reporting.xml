@@ -24,17 +24,6 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/open_camera"
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/light_gray"
-            android:text="Open Camera"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:cornerRadius="10dp" />
-
-        <Button
             android:id="@+id/submit_report"
             android:layout_width="match_parent"
             android:layout_height="71dp"

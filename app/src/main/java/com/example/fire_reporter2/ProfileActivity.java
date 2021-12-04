@@ -56,30 +56,36 @@ public class ProfileActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(USERS);
 
+        getUserID();
+        showAllUserData();
+
         editBtn.setOnClickListener((View v) -> {
             Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
             intent.putExtra("id", user_id);
             startActivity(intent);
         });
 
-        showAllUserData();
-        Log.w(TAG, "User name: " + user_name);
-        Log.w(TAG, "User email: " + user_email);
-
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
+            Intent intent;
             int id = item.getItemId();
             switch (id){
                 case R.id.home:
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.reporting:
-                    startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
+                    intent = new Intent(getApplicationContext(), ReportingActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.map:
-                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                    intent = new Intent(getApplicationContext(), MapActivity.class);
+                    intent.putExtra("id", user_id);
+                    startActivity(intent);
                     overridePendingTransition(0,0);
                     return true;
             }
@@ -90,9 +96,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void showAllUserData() {
+    private void getUserID() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
+    }
+
+    private void showAllUserData() {
         Log.d(TAG, "User ID: " + user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
