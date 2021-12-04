@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,10 +31,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ReportingActivity extends AppCompatActivity {
+    private static final String TAG = "ReportingActivity";
     ImageView imageView;
     Button submitReport;
     BottomNavigationView navbar;
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     String user_id;
     private static final int CAMERA_REQUEST = 1888;
@@ -49,11 +51,11 @@ public class ReportingActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.image_view);
         submitReport = findViewById(R.id.submit_report);
-        submitReport.setVisibility(View.INVISIBLE);
         navbar = findViewById(R.id.bottom_navbar);
 
+        submitReport.setVisibility(View.INVISIBLE);
+
         getUserID();
-        openCamera();
 
         navbar.setSelectedItemId(R.id.reporting);
         navbar.setOnItemSelectedListener((@NonNull MenuItem item) -> {
@@ -81,76 +83,51 @@ public class ReportingActivity extends AppCompatActivity {
             }
             return false;
         });
-    }
 
-    public void openSomeActivityForResult() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
-        someActivityResultLauncher.launch(intent);
-    }
-
-    private void openCamera() {
-        // request for camera permission
-        if (ContextCompat.checkSelfPermission(ReportingActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(ReportingActivity.this, new String[] {
-                    Manifest.permission.CAMERA
-            }, CAMERA_PERMISSION_CODE);
-        }
-
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
-        // TODO: make it automatically open the rear camera
-        cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-        startActivityIfNeeded(cameraIntent, CAMERA_REQUEST);
+        openCamera();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                activityResultLauncher.launch(cameraIntent);
+            } else {
+                Log.w(TAG, "camera permission denied");
+                Toast.makeText(this, "Camera access not enabled", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.putExtra("id", user_id);
+                startActivity(intent);
+                overridePendingTransition(0,0);
             }
-            else
-            {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void openCamera() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Bitmap photo = (Bitmap) result.getData().getExtras().get("data");
+                    imageView.setImageBitmap(photo);
+                    submitReport.setVisibility(View.VISIBLE);
+                }
             }
+        });
+
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+            Log.w(TAG, "Requesting camera permissions");
+        } else {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            activityResultLauncher.launch(cameraIntent);
         }
     }
 
     private void getUserID() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == AppCompatActivity.RESULT_OK)
-        {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            submitReport.setVisibility(View.VISIBLE);
-            imageView.setImageBitmap(photo);
-        }
-        if (resultCode != RESULT_CANCELED) {
-            if (requestCode == 100) {
-                // get captured image
-                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
-
-
-                imageView.setImageBitmap(capturedImage);
-                Log.w("ReportingActivity", "result not canceled");
-            }
-        } else {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            intent.putExtra("id", user_id);
-            startActivity(intent);
-            overridePendingTransition(0,0);
-            Log.w("ReportingActivity", "result canceled");
-        }
     }
 }
