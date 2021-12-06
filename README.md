@@ -1,4 +1,4 @@
-# Fire Reporter: A real-time fire-reporting app
+# Fire Reporter: A real-time fire reporting app
 An android applicaiton that allows for users to take a photo of an active fire, which is then sent to local firefighters so that they may respond to it in a timely manner.
 Developed with Android Studio and written in Java. 
 
