@@ -1,9 +1,10 @@
 package com.example.fire_reporter2;
 
 public class Credentials {
-    private String Email = "Admin@gmail.com";
-    private String Password = "12345678";
-    private String Full_name = "Charlie Hua";
+    String Email, Password, Full_name;
+
+    public Credentials(){
+    }
 
     Credentials(String email, String password, String full_name) {
         this.Email = email;

@@ -8,7 +8,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LogonActivity extends AppCompatActivity {
@@ -39,6 +47,43 @@ public class LogonActivity extends AppCompatActivity {
                 String input_email = e_email.getText().toString();
                 String input_password = e_password.getText().toString();
 
+                //NOTE: Remove from here to "END REMOVE" if Login via database does not work.
+                String entered_email = e_email.getText().toString().trim();
+                String entered_password = e_password.getText().toString().trim();
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                Query check_email = reference.orderByChild("email").equalTo(entered_email);
+
+                check_email.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            e_email.setError(null);
+
+                            String database_email = snapshot.child(entered_email).child("email").getValue(String.class);
+                            String database_password = snapshot.child(entered_email).child("password").getValue(String.class);
+
+                            if (database_email.equals(entered_email) && database_password.equals(entered_password)){
+                                Intent intent = new Intent(LogonActivity.this, HomeActivity.class);
+                                intent.putExtra("email", database_email);
+                                intent.putExtra("password", database_password);
+                                startActivity(intent);
+                            }
+                            else{
+                                e_password.setError("Wrong password.");
+                            }
+                        }
+                        else{
+                            e_email.setError("There is no account associated with this email.");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                //END REMOVE
                 if (input_email.isEmpty() || input_password.isEmpty()) {
                     Toast.makeText(LogonActivity.this, "Please enter your logon information correctly!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -61,7 +106,6 @@ public class LogonActivity extends AppCompatActivity {
                 }
             }
         });
-
         //On click listener for the New User textview
         e_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +114,6 @@ public class LogonActivity extends AppCompatActivity {
             }
         });
     }
-
     //Function for validating logon information.
     private boolean validate(String Email, String Password) {
         if (RegistrationActivity.credentials != null) {
