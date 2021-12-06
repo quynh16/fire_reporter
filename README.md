@@ -19,14 +19,21 @@ Profile will then store user information and keep a record of his/her recent fir
 * Android Emulator | Android Version 12.0
 
 ## Setup
-To run this project, install it locally using ______
+### Installing on your Android device directly:
+1. Open the browser on your phone and download the APK file
+2. Go to Downloads and tap on the downloaded APK file.
+3. Tap "Yes" when prompted to install
+4. App installation should then begin
 
-```
-$ cd ../lorem
-$ npm install
-$ npm start
-```
-ADMIN NOTE: SETUP IS WORK IN PROGRESS.
+### Installing onto the Android device from a computer:
+1. Open the browser on your computer and download the APK file. 
+2. Make sure third-party apps are allowed on your Android device. Go to Menu > Settings > Security > and check "Unknown Sources". This allows for your device to install apps from sources other than the Google Play Store.
+3. Connect your Android device to your computer and have it be connected as a "Media Device".
+4. If prompted, click on "Open Device to View Files." If not, find your device's folder on the computer. This is usually listed under "My Computer" or "Computer" for a Windows PC.
+5. Copy the APK file from your computer and paste it into a folder of your choice on the Android device. 
+6. On your Android device, go to the "My Files" or "Files" folder and find the folder that you pasted the APK file into. 
+7. Tap on the APK file and then tap on "Install".
+8. App installation should then begin
 
 ## Getting Started
 1. Launch the application
