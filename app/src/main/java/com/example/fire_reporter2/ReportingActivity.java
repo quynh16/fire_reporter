@@ -20,9 +20,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.fire_reporter2.ml.FireModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class ReportingActivity extends AppCompatActivity {
     private static final String TAG = "ReportingActivity";
@@ -58,7 +67,29 @@ public class ReportingActivity extends AppCompatActivity {
             SendEmailService.getInstance(getApplicationContext()).emailExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    SendEmailService.getInstance(getApplicationContext()).SendEmail(photo);
+
+                    try {
+                        FireModel model = FireModel.newInstance(getBaseContext());
+
+                        // Creates inputs for reference.
+                        TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
+                        inputFeature0.loadBuffer(convertBitmapToByteBuffer(photo));
+
+                        // Runs model inference and gets result.
+                        FireModel.Outputs outputs = model.process(inputFeature0);
+                        TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                        Log.i("PicO", "" + outputFeature0.getFloatArray()[0]);
+
+                        if(outputFeature0.getFloatArray()[0] < .5)
+                            SendEmailService.getInstance(getApplicationContext()).SendEmail(photo);
+                        // Releases model resources if no longer used.
+                        model.close();
+                    } catch (IOException e) {
+                        // TODO Handle the exception
+                        Log.e("Pic0", e.getMessage());
+                    }
+
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra("id", user_id);
                     startActivity(intent);
@@ -139,5 +170,27 @@ public class ReportingActivity extends AppCompatActivity {
     private void getUserID() {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
+    }
+
+    private ByteBuffer convertBitmapToByteBuffer(Bitmap bitmap) {
+        ByteBuffer byteBuffer;
+        byteBuffer = ByteBuffer.allocateDirect(
+                4 * 256 * 256 * 3);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        int[] intValues = new int[256 * 256];
+        bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0,
+                bitmap.getWidth(), bitmap.getHeight());
+        int pixel = 0;
+        for (int i = 0; i < 256; ++i) {
+            for (int j = 0; j < 256; ++j) {
+                final int val = intValues[pixel++];
+                byteBuffer.putFloat(
+                        (((val >> 16) & 0xFF))/255);
+                byteBuffer.putFloat(
+                        (((val >> 8) & 0xFF))/255);
+                byteBuffer.putFloat((((val) & 0xFF))/255);
+            }
+        }
+        return byteBuffer;
     }
 }
