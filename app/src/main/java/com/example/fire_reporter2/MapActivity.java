@@ -136,8 +136,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     getMyLocation();
 
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // Assume user will always grant permission
+
                 }
                 return;
             }
