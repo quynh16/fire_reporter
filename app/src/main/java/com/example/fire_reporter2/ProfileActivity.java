@@ -108,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                user_name = dataSnapshot.child(user_id).child("name").getValue(String.class);
+                user_name = dataSnapshot.child(user_id).child("full_name").getValue(String.class);
                 user_email = dataSnapshot.child(user_id).child("email").getValue(String.class);
                 name.setText(user_name);
                 email.setText(user_email);

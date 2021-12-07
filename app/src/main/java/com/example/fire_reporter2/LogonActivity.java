@@ -31,6 +31,7 @@ public class LogonActivity extends AppCompatActivity {
     private int counter = 5;
 
     private static String TAG = "LogonActivity";
+    private String user_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +68,15 @@ public class LogonActivity extends AppCompatActivity {
                             String database_email = "";
                             String database_password = "";
                             for (DataSnapshot ds : snapshot.getChildren()) {
+                                user_id = ds.getKey().toString();
+                                Log.w(TAG, user_id);
                                 database_email = ds.child("email").getValue().toString();
                                 database_password = ds.child("password").getValue().toString();
                             }
 
                             if (database_email.equals(entered_email) && database_password.equals(entered_password)){
                                 Intent intent = new Intent(LogonActivity.this, HomeActivity.class);
-                                intent.putExtra("email", database_email);
-                                intent.putExtra("password", database_password);
+                                intent.putExtra("id", user_id);
                                 startActivity(intent);
                             }
                             else{
