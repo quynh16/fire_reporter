@@ -48,13 +48,6 @@ public class LogonActivity extends AppCompatActivity {
         e_logon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //COMMENTED OUT. REMOVE IF LOGIN ACTIVITY WORKS WITHOUT THIS CODE.
-                /*
-                String input_email = e_email.getText().toString();
-                String input_password = e_password.getText().toString();
-                */
-
-                //NOTE: Remove from here to "END REMOVE" if Login via database does not work.
                 String entered_email = e_email.getText().toString().trim();
                 Log.w(TAG, entered_email);
                 String entered_password = e_password.getText().toString().trim();
@@ -96,30 +89,6 @@ public class LogonActivity extends AppCompatActivity {
 
                     }
                 });
-                //END REMOVE
-
-                //COMMENTED OUT. REMOVE IF LOGIN ACTIVITY WORKS WITHOUT THIS CODE.
-                /*
-                if (input_email.isEmpty() || input_password.isEmpty()) {
-                    Toast.makeText(LogonActivity.this, "Please enter your logon information correctly!", Toast.LENGTH_SHORT).show();
-                } else {
-                    isValid = validate(input_email, input_password);
-                    Log.w(TAG, isValid + "");
-                    if (!isValid) {
-                        counter--;
-                        Toast.makeText(LogonActivity.this, "Incorrect credentials entered", Toast.LENGTH_SHORT).show();
-                        e_attempts_info.setText("Number of Attempts Remaining: " + counter);
-
-                        if (counter == 0) {
-                            e_logon.setEnabled(false);
-                        }
-                    } else {
-                        Toast.makeText(LogonActivity.this, "Logon was successful!", Toast.LENGTH_SHORT).show();
-                        //Add code to send user to Profile OR Homepage. Which one is TBD. Currently set to Homepage
-                        Intent intent = new Intent(LogonActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    }
-                } */
             }
         });
         //On click listener for the New User textview
@@ -130,16 +99,4 @@ public class LogonActivity extends AppCompatActivity {
             }
         });
     }
-    //COMMENTED OUT. REMOVE IF LOGIN ACTIVITY WORKS WITHOUT THIS CODE.
-    /*
-    //Function for validating logon information.
-    private boolean validate(String Email, String Password) {
-        Log.w(TAG, "logging validating");
-        if (RegistrationActivity.credentials != null) {
-            if (Email.equals(RegistrationActivity.credentials.getEmail()) && Password.equals(RegistrationActivity.credentials.getPassword())) {
-                return true;
-            }
-        }
-        return false;
-    }*/
 }
