@@ -20,13 +20,13 @@
         android:background="@color/light_gray"
         android:scrollbars="none"
         android:layout_marginTop="60dp"
-        android:padding="10dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp">>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             app:layout_constraintTop_toBottomOf="@id/include">
 
             <TextView
@@ -67,24 +67,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/statusFire" />
 
-            <include
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/newsFeed"
-                layout="@layout/activity_article_viewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/articleHeader" />
 
-            <!--            <androidx.viewpager2.widget.ViewPager2-->
-            <!--                android:id="@+id/newsFeed"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-
-            <!--                android:background="@color/light_gray"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />-->
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="157dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginEnd="108dp"
+                app:layout_constraintBottom_toTopOf="@+id/factsView"
+                app:layout_constraintEnd_toEndOf="@+id/newsFeed"
+                app:layout_constraintHorizontal_bias="0.77"
+                android:padding="6dp"
+                app:layout_constraintStart_toStartOf="@+id/newsFeed"
+                app:layout_constraintTop_toBottomOf="@+id/articleHeader" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/factsView"
@@ -100,15 +103,6 @@
 
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navbar_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
+    <include layout="@layout/bottom_navbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

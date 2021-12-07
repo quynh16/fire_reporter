@@ -8,15 +8,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navbar_menu" />
-
     <TextView
         android:id="@+id/map_activity"
         android:layout_width="wrap_content"
@@ -26,4 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include layout="@layout/bottom_navbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
