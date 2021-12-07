@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     private void getNews(String category){
         loadingPB.setVisibility(View.VISIBLE);
         articlesArrayList.clear();
-        String URL = "https://newsapi.org/v2/everything?q="+category+"&from=2021-11-28&sortBy=popularity&apiKey="+API_KEY;
+        String URL = "https://newsapi.org/v2/everything?q="+category+"&from=2021-11-11&sortBy=relevancy&apiKey="+API_KEY;
         String baseURL = "https://newsapi.org/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         newsRVAdapter = new NewsRVAdapter(articlesArrayList,this);
 
         newsRV.setAdapter(newsRVAdapter);
-        String category = "Fire-Department";
+        String category = "Wildfires";
         getNews(category);
         newsRVAdapter.notifyDataSetChanged();
 
