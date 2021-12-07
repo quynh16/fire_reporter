@@ -30,8 +30,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -130,6 +133,11 @@ public class ReportingActivity extends AppCompatActivity {
         }
     }
 
+    private void updateUserDB(String report_id) {
+        DatabaseReference usersRef = database.getReference("users");
+        usersRef.child(user_id).child("reports").child(report_id).setValue("report id");
+    }
+
     private void updateDB() {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("reports");
@@ -139,7 +147,7 @@ public class ReportingActivity extends AppCompatActivity {
         String date = df.format(Calendar.getInstance().getTime());
         Report report = new Report(report_id, user_id, "Reported", date);
         reportRef.setValue(report);
-        uploadImage(report_id);
+        updateUserDB(report_id);
     }
 
     private void uploadImage(String report_id) {

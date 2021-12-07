@@ -1,7 +1,10 @@
 package com.example.fire_reporter2;
 
+import java.util.ArrayList;
+
 public class Credentials {
     String Email, Password, Full_name;
+    int num_reports;
 
     public Credentials(){
     }
@@ -10,6 +13,7 @@ public class Credentials {
         this.Email = email;
         this.Password = password;
         this.Full_name = full_name;
+        this.num_reports = 0;
     }
 
     public String getEmail() {
@@ -21,6 +25,7 @@ public class Credentials {
     public String getPassword() {
         return Password;
     }
+    public int getNum_reports() { return num_reports; }
 
     public void setPassword(String password) {
         Password = password;
@@ -31,5 +36,6 @@ public class Credentials {
     public void setFull_name(String full_name) {
         Full_name = full_name;
     }
+    public void setNum_reports(int num_reports) { this.num_reports = num_reports; }
 }
 
