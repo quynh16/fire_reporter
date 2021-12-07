@@ -2,8 +2,6 @@ package com.example.fire_reporter2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -27,7 +24,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends AppCompatActivity {
-    private static final String API_KEY = "56cc0cd367c4405686200dfd43598387";
+    private static final String API_KEY_NEWS = "56cc0cd367c4405686200dfd43598387";
+
     ViewPager2 viewPager2;
     ArrayList<ViewPagerItem> viewPagerItemArrayList;
     private ViewPager2 newsRV;
@@ -40,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     private void getNews(String category){
         loadingPB.setVisibility(View.VISIBLE);
         articlesArrayList.clear();
-        String URL = "https://newsapi.org/v2/everything?q="+category+"&from=2021-11-28&sortBy=popularity&apiKey="+API_KEY;
+        String URL = "https://newsapi.org/v2/everything?q="+category+"&from=2021-11-28&sortBy=popularity&apiKey="+ API_KEY_NEWS;
         String baseURL = "https://newsapi.org/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
