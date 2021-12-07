@@ -126,7 +126,11 @@ public class HomeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                intent.putExtra("id","1");
+//                intent.putExtra("name", "Elizabeth Olsen");
+//                intent.putExtra("email", "email@gmail.com");
+                startActivity(intent);
             }
         });
 

@@ -24,8 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     TextInputEditText editName, editEmail, editPassword;
 
-    private String user_name, user_email;
-    private int user_id;
+    private String user_id, user_name, user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +43,30 @@ public class EditProfileActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.edit_email);
         editPassword = findViewById(R.id.edit_password);
 
-        user_name = getIntent().getStringExtra("name");
-        user_email = getIntent().getStringExtra("email");
+        Intent intent = getIntent();
+        user_name = intent.getStringExtra("name");
+        user_email = intent.getStringExtra("email");
+        user_id = intent.getStringExtra("id");
 
         editName.setText(user_name);
         editEmail.setText(user_email);
 
-        ImageButton btn = (ImageButton)findViewById(R.id.back_to_profile_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ImageButton backBtn = (ImageButton)findViewById(R.id.back_to_profile_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                intent.putExtra("id", user_id);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton saveBtn = (ImageButton)findViewById(R.id.save_profile_btn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserHelperClass helper = new UserHelperClass(user_id, user_name, user_email);
+                reference.child(user_id).setValue(helper);
                 startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
             }
         });

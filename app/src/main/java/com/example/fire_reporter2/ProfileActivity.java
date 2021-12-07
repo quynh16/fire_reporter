@@ -31,8 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView name, email, password;
     private ImageButton editButton;
 
-    private String user_name, user_email;
-    private int user_id;
+    private String user_id, user_name, user_email;
 
     private static final String USERS = "users";
 
@@ -46,9 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                intent.putExtra("id",1);
-                intent.putExtra("name", "Elizabeth Olsen");
-                intent.putExtra("email", "email@gmail.com");
+                intent.putExtra("id",user_id);
+                intent.putExtra("name", user_name);
+                intent.putExtra("email", user_email);
                 startActivity(intent);
             }
         });
@@ -59,28 +58,29 @@ public class ProfileActivity extends AppCompatActivity {
         navbar = findViewById(R.id.bottom_navbar);
         report_history = findViewById(R.id.report_history);
 
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference(USERS);
-
         // user information
         name = findViewById(R.id.user_name);
         email = findViewById(R.id.user_email);
         profilePicture = findViewById(R.id.profile_picture);
         editButton = (ImageButton)findViewById(R.id.edit_profile_btn);
 
+
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference(USERS);
+
+        showAllUserData();
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
                 String abc = "hello";
-                intent.putExtra("name", abc);
+                intent.putExtra("name", user_name);
+                intent.putExtra("email", user_email);
+                intent.putExtra("id", user_id);
                 startActivity(intent);
             }
         });
-
-//        showAllUserData();
-
-        // get all values from text fields
 
         navbar.setSelectedItemId(R.id.home);
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -111,9 +111,27 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void showAllUserData() {
         Intent intent = getIntent();
-        String user_id = intent.getStringExtra("id");
-        String user_name = intent.getStringExtra("name");
-        String user_email = intent.getStringExtra("email");
+        user_id = intent.getStringExtra("id");
+//        user_name = intent.getStringExtra("name");
+//        user_email = intent.getStringExtra("email");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+//                    if (ds.getKey().equals(user_id)) {
+//                        user_name = ds.child("name").getValue(String.class);
+//                        user_email = ds.child("email").getValue(String.class);
+//                    }
+                    user_name = ds.getKey().toString();
+                    user_email = ds.child("email").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         name.setText(user_name);
         email.setText(user_email);
