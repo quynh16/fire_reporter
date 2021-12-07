@@ -88,7 +88,6 @@ public class HomeActivity extends AppCompatActivity {
 
         newsRV.setAdapter(newsRVAdapter);
         String category = "Wildfires";
-        String category = "WildFires";
         getNews(category);
         newsRVAdapter.notifyDataSetChanged();
 
