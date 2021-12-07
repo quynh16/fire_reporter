@@ -35,8 +35,6 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<Articles> articlesArrayList;
     private NewsRVAdapter newsRVAdapter;
 
-
-
     private void getNews(String category){
         loadingPB.setVisibility(View.VISIBLE);
         articlesArrayList.clear();
