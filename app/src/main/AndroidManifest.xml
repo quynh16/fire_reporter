@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,15 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fire_reporter2" >
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAAIvvsIi6jg-hWVJvBIZ1CDpIHMYpU3gk" />
-        <!-- Don't use my api key, it will not work for you.-->
 
-
-
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
@@ -52,6 +45,14 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAAIvvsIi6jg-hWVJvBIZ1CDpIHMYpU3gk" />
+
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

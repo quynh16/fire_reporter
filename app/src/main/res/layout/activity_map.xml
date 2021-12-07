@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include4"
+        layout="@layout/toolbar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navbar"
@@ -17,11 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navbar_menu" />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
+        android:id="@+id/map"
+        class ="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MainActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/include4"
+        tools:context=".MapActivity"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>

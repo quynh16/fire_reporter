@@ -3,14 +3,17 @@ package com.example.fire_reporter2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -41,29 +44,29 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.maps.model.PlacesSearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleApiClient.OnConnectionFailedListener, RoutingListener{
+        GoogleApiClient.OnConnectionFailedListener, RoutingListener {
     //google map object
     private GoogleMap mMap;
+    private Context mContext;
 
     //current and destination location objects
-    Location myLocation=null;
-    Location destinationLocation=null;
-    protected LatLng start=null;
-    protected LatLng end=null;
+    Location myLocation = null;
+    Location destinationLocation = null;
+    protected LatLng start = null;
+    protected LatLng end = null;
 
     //to get location permissions.
     private final static int LOCATION_REQUEST_CODE = 23;
-    boolean locationPermission=false;
+    boolean locationPermission = false;
 
     //polyline object
-    private List<Polyline> polylines=null;
-
-
+    private List<Polyline> polylines = null;
 
 
     @Override
@@ -89,18 +92,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch (id){
+                switch (id) {
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.reporting:
                         startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.map:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
 
@@ -110,17 +113,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    private void requestPermision()
-    {
-        if(ContextCompat.checkSelfPermission(this,
+    private void requestPermision() {
+        if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_REQUEST_CODE);
-        }
-        else{
-            locationPermission=true;
+        } else {
+            locationPermission = true;
         }
     }
 
@@ -145,7 +146,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     //to get user location
-    private void getMyLocation(){
+    private void getMyLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -184,6 +195,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(locationPermission) {
             getMyLocation();
         }
+
+        //PlacesSearchResult[] placesSearchResults = new NearbySearch().run().results;
+
+        //Log.e("response1Tag", placesSearchResults[0].toString());
+        //Log.e("response2Tag", placesSearchResults[1].toString());
+
+        //double lat1 = placesSearchResults[0].geometry.location.lat;
+        //double lng1 = placesSearchResults[0].geometry.location.lng;
+
+        //double lat2 = placesSearchResults[1].geometry.location.lat;
+        //double lng2 = placesSearchResults[1].geometry.location.lng;
+
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(lat1, lng1)));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(lat2, lng2)));
+
+        //mMap.setMinZoomPreference(14.0f);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat1, lng1)));
+
+
+
 
     }
 
