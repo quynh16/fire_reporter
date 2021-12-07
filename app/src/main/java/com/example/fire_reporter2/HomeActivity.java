@@ -35,6 +35,8 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<Articles> articlesArrayList;
     private NewsRVAdapter newsRVAdapter;
 
+    String user_id = "";
+
     private void getNews(String category){
         loadingPB.setVisibility(View.VISIBLE);
         articlesArrayList.clear();
@@ -85,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         newsRV.setAdapter(newsRVAdapter);
+        String category = "Wildfires";
         String category = "WildFires";
         getNews(category);
         newsRVAdapter.notifyDataSetChanged();
