@@ -2,6 +2,7 @@ package com.example.fire_reporter2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,8 @@ public class LogonActivity extends AppCompatActivity {
     boolean isValid = false;
     private int counter = 5;
 
+    private static String TAG = "LogonActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class LogonActivity extends AppCompatActivity {
 
                 //NOTE: Remove from here to "END REMOVE" if Login via database does not work.
                 String entered_email = e_email.getText().toString().trim();
+                Log.w(TAG, entered_email);
                 String entered_password = e_password.getText().toString().trim();
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -57,11 +61,15 @@ public class LogonActivity extends AppCompatActivity {
                 check_email.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
+                        if(snapshot.exists()) {
                             e_email.setError(null);
 
-                            String database_email = snapshot.child(entered_email).child("email").getValue(String.class);
-                            String database_password = snapshot.child(entered_email).child("password").getValue(String.class);
+                            String database_email = "";
+                            String database_password = "";
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                database_email = ds.child("email").getValue().toString();
+                                database_password = ds.child("password").getValue().toString();
+                            }
 
                             if (database_email.equals(entered_email) && database_password.equals(entered_password)){
                                 Intent intent = new Intent(LogonActivity.this, HomeActivity.class);
@@ -88,7 +96,7 @@ public class LogonActivity extends AppCompatActivity {
                     Toast.makeText(LogonActivity.this, "Please enter your logon information correctly!", Toast.LENGTH_SHORT).show();
                 } else {
                     isValid = validate(input_email, input_password);
-
+                    Log.w(TAG, isValid + "");
                     if (!isValid) {
                         counter--;
                         Toast.makeText(LogonActivity.this, "Incorrect credentials entered", Toast.LENGTH_SHORT).show();
@@ -116,6 +124,7 @@ public class LogonActivity extends AppCompatActivity {
     }
     //Function for validating logon information.
     private boolean validate(String Email, String Password) {
+        Log.w(TAG, "logging validating");
         if (RegistrationActivity.credentials != null) {
             if (Email.equals(RegistrationActivity.credentials.getEmail()) && Password.equals(RegistrationActivity.credentials.getPassword())) {
                 return true;

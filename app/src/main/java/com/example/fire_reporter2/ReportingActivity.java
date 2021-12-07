@@ -59,6 +59,7 @@ public class ReportingActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     SendEmailService.getInstance(getApplicationContext()).SendEmail(photo);
+                    Toast.makeText(ReportingActivity.this, "Report successfully sent.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra("id", user_id);
                     startActivity(intent);

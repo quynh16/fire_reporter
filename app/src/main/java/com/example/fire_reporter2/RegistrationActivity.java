@@ -50,7 +50,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     //NOTE: Remove from here to "END REMOVE" if Login via database does not work.
                     rootNode = FirebaseDatabase.getInstance();
                     reference = rootNode.getReference("users");
-                    reference.child(reg_full_name).setValue(credentials);
+                    DatabaseReference userRef = reference.push();
+                    userRef.setValue(credentials);
                     //END REMOVE
                     //Take user back to Login Screen:
                     Intent intent = new Intent(RegistrationActivity.this, LogonActivity.class); //Recent change 11/28
