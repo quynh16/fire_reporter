@@ -133,9 +133,9 @@ public class ReportingActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUserDB(String report_id) {
+    private void updateUserDB(String report_id, String date) {
         DatabaseReference usersRef = database.getReference("users");
-        usersRef.child(user_id).child("reports").child(report_id).setValue("report id");
+        usersRef.child(user_id).child("reports").child(report_id).setValue(date);
     }
 
     private void updateDB() {
@@ -147,7 +147,7 @@ public class ReportingActivity extends AppCompatActivity {
         String date = df.format(Calendar.getInstance().getTime());
         Report report = new Report(report_id, user_id, "Reported", date);
         reportRef.setValue(report);
-        updateUserDB(report_id);
+        updateUserDB(report_id, date);
     }
 
     private void uploadImage(String report_id) {

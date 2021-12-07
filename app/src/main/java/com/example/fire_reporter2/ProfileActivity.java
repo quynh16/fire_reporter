@@ -14,12 +14,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
@@ -90,9 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
             return false;
         });
-        for (int i = 0; i < 5; i++) {
-            createReportCard(findViewById(android.R.id.content));
-        }
+//        createReportCard(findViewById(android.R.id.content));
     }
 
     private void getUserID() {
@@ -123,7 +127,32 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void createReportCard(View v) {
+        final String[] report_id = {""};
+        Query recentReport = reference.orderByChild("reports").limitToFirst(1);
+        recentReport.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot){
+                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    report_id[0] = childSnapshot.getKey();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException(); // don't swallow errors
+            }
+        });
+
         View view = getLayoutInflater().inflate(R.layout.report_history_card, (ViewGroup) v, false);
+        ImageView report_image = findViewById(R.id.report_image);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("reports");
+        StorageReference imageRef = storageReference.child(report_id[0]);
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        Glide.with(this /* context */)
+                .load(imageRef)
+                .into(report_image);
+
+
         report_history.addView(view);
     }
 }
