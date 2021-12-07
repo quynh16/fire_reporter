@@ -6,6 +6,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +22,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,9 +37,9 @@ public class ReportingActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     FirebaseDatabase database;
     DatabaseReference reference;
+    private FusedLocationProviderClient fusedLocationClient;
 
     String user_id;
-    private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
     @Override
@@ -128,7 +132,8 @@ public class ReportingActivity extends AppCompatActivity {
             }
         });
 
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
             Log.w(TAG, "Requesting camera permissions");
         } else {
