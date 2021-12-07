@@ -83,14 +83,14 @@ public class SendEmailService {
                 Message.RecipientType.TO,
                 InternetAddress.parse("qtd.nguyen16@gmail.com")
             );
-            message.setSubject("Testing Email TLS");
-            message.setText("Welcome to Medium!");
+            message.setSubject("Fire Report");
+            message.setText("There is a new fire reported");
 
             Multipart multipart = new MimeMultipart();
 
             //text
             BodyPart messageBodyPart = new MimeBodyPart();
-            String htmlText = "<H1>Welcome to Medium!</H1>";
+            String htmlText = "<H1>New Fire Reported</H1>";
             messageBodyPart.setContent(htmlText, "text/html");
             multipart.addBodyPart(messageBodyPart);
 
@@ -106,14 +106,6 @@ public class SendEmailService {
 
             imageBodyPart.setFileName("Example.png");
             multipart.addBodyPart(imageBodyPart);
-
-            //attachment
-            MimeBodyPart textBodyPart = new MimeBodyPart();
-            ByteArrayDataSource tds = new ByteArrayDataSource("text".getBytes(Charset.forName("UTF-8")), "text/plain");
-            textBodyPart.setDataHandler(new DataHandler(tds));
-            textBodyPart.setHeader("Content-ID", "<text>");
-            textBodyPart.setFileName("Example.txt");
-            multipart.addBodyPart(textBodyPart);
 
             message.setContent(multipart);
 

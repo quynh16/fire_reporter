@@ -6,11 +6,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,9 +27,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.fire_reporter2.ml.FireModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -42,9 +58,10 @@ public class ReportingActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     FirebaseDatabase database;
     DatabaseReference reference;
+    FirebaseStorage storage;
+    private FusedLocationProviderClient fusedLocationClient;
 
     String user_id;
-    private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
     @Override
@@ -93,7 +110,6 @@ public class ReportingActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra("id", user_id);
                     startActivity(intent);
-                    overridePendingTransition(0,0);
                 }
             });
         });
@@ -146,6 +162,47 @@ public class ReportingActivity extends AppCompatActivity {
         }
     }
 
+    private void updateUserDB(String report_id, String date) {
+        DatabaseReference usersRef = database.getReference("users");
+        usersRef.child(user_id).child("reports").child(report_id).setValue(date);
+    }
+
+    private void updateDB() {
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("reports");
+        DatabaseReference reportRef = reference.push();
+        String report_id = reportRef.getKey();
+        DateFormat df = new SimpleDateFormat("d MMM yyyy, HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
+        Report report = new Report(report_id, user_id, "Reported", date);
+        reportRef.setValue(report);
+        updateUserDB(report_id, date);
+    }
+
+    private void uploadImage(String report_id) {
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference("reports");
+        StorageReference imageRef = storageRef.child(report_id);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(ReportingActivity.this, "Failed to upload image", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(ReportingActivity.this, "Uploaded image", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
     private void openCamera() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -158,7 +215,8 @@ public class ReportingActivity extends AppCompatActivity {
             }
         });
 
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
             Log.w(TAG, "Requesting camera permissions");
         } else {

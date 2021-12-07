@@ -1,12 +1,27 @@
 package com.example.fire_reporter2;
 
 public class UserHelperClass {
-    String name, email, password;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String id, name, email, password;
     int age;
 
     public UserHelperClass() {}
 
-    public UserHelperClass(String name, String email, String password, int age) {
+    public UserHelperClass(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public UserHelperClass(String id, String name, String email, String password, int age) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private static final String TAG = "EditttProfileActivity";
+    private static final String TAG = "EditProfileActivity";
     BottomNavigationView navbar;
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -108,7 +108,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                user_name = dataSnapshot.child(user_id).child("name").getValue(String.class);
+                user_name = dataSnapshot.child(user_id).child("full_name").getValue(String.class);
                 user_email = dataSnapshot.child(user_id).child("email").getValue(String.class);
                 user_password = dataSnapshot.child(user_id).child("password").getValue(String.class);
                 editName.setText(user_name);
@@ -185,7 +185,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean nameChanged() {
         if (!user_name.equals(editName.getText().toString())) {
-            reference.child(user_id).child("name").setValue(editName.getText().toString());
+            reference.child(user_id).child("full_name").setValue(editName.getText().toString());
             return true;
         } else {
             return false;

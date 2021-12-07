@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<Articles> articlesArrayList;
     private NewsRVAdapter newsRVAdapter;
 
-    String user_id = "1";
+    String user_id = "";
 
     private void getNews(String category){
         loadingPB.setVisibility(View.VISIBLE);
@@ -65,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        user_id = getIntent().getStringExtra("id");
 
         newsRV = findViewById(R.id.newsFeed);
         loadingPB = findViewById(R.id.loading);
