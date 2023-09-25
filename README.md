@@ -1,6 +1,9 @@
 # Fire Reporter: A real-time fire reporting app
-An android applicaiton that allows for users to take a photo of an active fire, which is then sent to local firefighters so that they may respond to it in a timely manner.
+An Android application that allows users to take a photo of an active fire and then send it to local firefighters so that they may respond to it in a timely manner.
 Developed with Android Studio and written in Java. 
+
+![Home and Profile screen](./img/home_profile.png)
+![Report and Report History screen](./img/report_history.png)
 
 ## Table of Contents
 * [General Info](#general-info)
@@ -10,8 +13,8 @@ Developed with Android Studio and written in Java.
 
 ## General Info
 This application takes a photo of a live fire and verifies that it is a real fire via a machine learning algorithm. It will then send this photo to a firefighter,
-who will then send a response back regarding the fire's status. This application will also require users to login and create an account with an associated profile.
-Profile will then store user information and keep a record of his/her recent fire reports. This data will be stored using Firebase. 
+who will then send a response back regarding the fire's status. This application will also require users to log in and create an account with an associated profile.
+The profile contains user information and a record of their fire reports. This data is stored using Firebase. 
 
 ## Technologies
 * Android Studio Arctic Fox | 2020.3.1 Patch 3
